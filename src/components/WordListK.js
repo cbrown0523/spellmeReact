@@ -1,96 +1,91 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow:
 
-
-function WordLista(props) {
-        let wordlistKs = ["make", "they", "too", "jump", "move", "run", "two", "again", "help", "new", "there", "she", "so", "soon", "that", "there", "use", "could", "live", "one", "then", "three"]
-       
-            const [ word, setWord] = useState(wordlistKs);
-            const handleInput = event =>{
-                setWord(event.target.value);
-            };
-            const logValue = () => {
-                console.log(word);
-              };
-               return (
-        <div>
-            <ul>
-            {wordlistKs.map((wordlistK) =>(
-             <li><input type="checkbox" id={props.brand} value={props.brand}></input>{ props.brand }</li>
-            ))}
-            </ul>
-
-
-
-
-            import React , {useState} from 'react';
+  import React , {useState} from 'react';
   import ReactDOM from 'react-dom';
   import '../index.css';
   import App from '../App';
   import {Container, Button} from 'react-bootstrap'
   import axios from "axios";
   import $ from 'jquery'
-  import WordListF from "../components/WordListF";
-  import WordListPK from "../components/WordListPK";
+  import WordListF from "../components/WordListF"
+import WordListPK from './WordListPK';
   
   export default function WordList() {
     function sayhello(){
         alert("hello");
     }
     function Words(props) {
-        return <li><input type="checkbox" id={props.item} value={props.item}></input>{ props.item }</li>
-      }
-    function addWordPK(){
-        let newWord = document.querySelector(".addNewPKWord");
-        let word = document.getElementById("wordPK").value;
-        let input = document.createElement("input");
-       input.setAttribute("type","checkbox");
-       input.setAttribute("value", word);
-       input.classList.add("checkbox");
-       input.id = word;
-       let label = document.createElement("label");
-        let li = document.createElement('li');
-       li.className = `list-group-item ${word} `  ;
+      const [checked, setChecked] = useState(false);
+      const handleChange1 = () => {
+        setChecked(!checked); console.log(checked)
+      };
+        return <li><input type="checkbox" checked={checked}
+        onChange= {handleChange1} id={props.item} value={props.item}></input>{ props.item }</li>
     
-       li.innerHTML = word;
-       let new1 = newWord.appendChild(li);
-       let new2 = new1.appendChild(label);
-     let new3 = new2.appendChild(input);
-       }
-
+      }
+        
        function WordListK() {
         let wordlistK = ["make", "they", "too", "jump", "move", "run", "two", "again", "help", "new", "there", "she", "so", "soon", "that", "there", "use", "could", "live", "one", "then", "three"]
-        const [ word, setWord] = useState(wordlistK);
-        const [newWord , setNewList] = useState("");
-        const handleInputChange = event =>{
-            setNewList(event.target.value) ;
-        };
+    const [word , setWord] = useState(wordlistK);
+    const [addWord , setAddWord] = useState("");
+    //const [wordList , setWordList] = useState([]);
+    
+    const handleChangeAddWord = event =>{
+      setAddWord(event.target.value);
+    }
+    const handleClick = event =>{
+      setWord([...word , addWord]);    }
+    console.log(word);
+        //     const [ word, setWord] = useState(wordlistK);
+    //     const [newWord , setNewList] = useState("");
+    //     const handleInputChange = event =>{
+    //         setNewList(event.target.value) ;
+    //        console.log(handleInputChange);
+    //     };
+    //     console.log(setNewList)
         
-        const handleAdd = ()=>{
-            const newList = word.concat({newWord});
-            setWord(newList);
+    //     const handleAdd = ()=>{
+    //         const newList = word.concat({newWord});
+    //         setWord(newList);
+    //         console.log(setNewList);
+    //         console.log(handleInputChange);
+    //     }
+    //     const handleInput = event =>{ setWord((word) => [...word, word])}
+    //  console.log(newWord)
+    //     const logValue = () => {
+    //         console.log(word);
+    //       };
 
-        }
-        const handleInput = event =>{ setWord((word) => [...word, word])}
-     
-        const logValue = () => {
-            console.log(word);
-          };
+          function addWordK(){
+            let newWord = document.querySelector(".addNewKWord");
+            let word = document.getElementById("wordK").value;
+            let input = document.createElement("input");
+           input.setAttribute("type","checkbox");
+           input.setAttribute("value", word);
+           input.classList.add("checkbox");
+           input.id = word;
+           let label = document.createElement("label");
+            let li = document.createElement('li');
+           li.className = `list-group-item ${word} `  ;
+        
+           li.innerHTML = word;
+           let new1 = newWord.appendChild(li);
+           let new2 = new1.appendChild(label);
+           let new3 = new2.appendChild(input);
+           }
+        
         
         return (
           <>
           
             <ul>
-              {wordlistK.map((wordlistKs) => <Words item={wordlistKs} />)}
-            </ul>
+            {word.map((wordlistKs) => <Words item={wordlistKs} />)}            </ul>
             <div className="input-group mb-3">
            
-           <input  className="form-control" id="wordF" aria-label="Username" />
+           <input onChange={handleChangeAddWord} className="form-control" id="wordF" aria-label="Username" />
 
          </div>
-         <button type="button" onChange= {handleInputChange} className="btn btn-light addword">Add</button>
-         <button type="button" onClick= {handleAdd} className="btn btn-light">Remove</button>
+         <button type="button" onClick= {handleClick} className="btn btn-light addword">Add</button>
+         <button type="button"  className="btn btn-light">Remove</button>
             
           </>
         );
@@ -139,7 +134,7 @@ function WordLista(props) {
           <ul className=" pkbody list-group list-group-flush addNewPKWord">
           </ul>
           <div className="card-body">
-          <WordListPK />
+            <WordListPK />
           </div>
         </div>
       </div>
@@ -154,7 +149,7 @@ function WordLista(props) {
           <ul className=" kbody list-group list-group-flush addNewKWord">
           </ul>
           <div className="card-body">
-          <WordListK />
+            < WordListK />
           </div>
         </div>                      
       </div>
